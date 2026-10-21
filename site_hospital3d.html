@@ -3,6 +3,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Hospital sem e com YC</title>
+<link rel="manifest" href="manifest-hospital.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hospital 3D">
 <style>
 /* Cena 3D em tela cheia, sem texto na tela. Esquerda: girar sozinho e centralizar. Direita: troca de hospital. */
 :root {
@@ -2309,5 +2315,14 @@ placeSun();
 frame();
 window.__sim = { rigs, bodies, renderer, goTo,  camera, controls, rigs, movers, bedsB, get cur() { return cur; } };
 })();
+</script>
+<script>
+// Tela cheia e tela sempre acesa a partir do primeiro toque (o navegador só permite depois de uma interação)
+addEventListener('pointerdown', function goFull(){
+  removeEventListener('pointerdown', goFull, true);
+  const d = document.documentElement;
+  try { (d.requestFullscreen || d.webkitRequestFullscreen)?.call(d)?.catch?.(() => {}); } catch (e) {}
+  try { navigator.wakeLock?.request('screen').catch(() => {}); } catch (e) {}
+}, true);
 </script>
 </body></html>
